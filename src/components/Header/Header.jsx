@@ -1,21 +1,22 @@
 import './Header.scss'
+import { Link } from 'react-router-dom'
+
 function Header() {
   return (
     <nav className="header">
-       <a href="/" className="header__logo">LOGO</a>
-       <ul className="header__nav-list">
-            <li className="header__list-item">
-                <a href="/" className="header__item-link header__item-link--is-active">Home</a>
-            </li>
-            <li className="header__list-item">
-                <a href="/login" className="header__item-link">Login</a>
-            </li>
-            <li className="header__list-item">
-                <a href="/register" className="header__item-link">Register</a>
-            </li>
-        </ul> 
+      <Link to="/" className="header__logo">LOGO</Link>
+      <ul className="header__nav-list">
+        <li className="header__list-item">
+          <Link to="/" className="header__item-link header__item-link--is-active">Home</Link>
+        </li>
+        <li className="header__list-item">
+          <Link to="/login" className="header__item-link">Login</Link>
+        </li>
+        <li className="header__list-item">
+          <Link to="/register" className="header__item-link">Register</Link>
+        </li>
+      </ul>
     </nav>
-
   )
 }
 
