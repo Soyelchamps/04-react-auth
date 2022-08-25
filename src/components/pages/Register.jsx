@@ -1,7 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import useForm from "../../hooks/useForm";
+import { RegisterUser } from "@/services/UserServices.js";
 
 function Register() {
-  const sendData = (data) => console.log(data);
+  const Navigate = useNavigate();
+  const sendData = async (data) => {
+    try {
+      const result = await RegisterUser(data);
+      if (result.status === 200) {
+        Navigate("/login");
+      }
+      console.log(result);
+    } catch (error) {
+      alert("Ocurrio un error: " + error.message);
+    }
+  };
+
   const { input, handleInputChange, handleSubmit } = useForm(sendData, {
     first_name: "",
     last_name: "",
@@ -93,9 +107,9 @@ function Register() {
             type="password"
             className="form-control"
             id="inputPassword"
-            name="email"
+            name="password"
             onChange={handleInputChange}
-            value={input.email}
+            value={input.password}
           />
         </div>
       </div>
