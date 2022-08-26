@@ -1,25 +1,32 @@
-import useForm from "../../hooks/useForm";
+import { useContext } from "react";
+import useForm from "@/hooks/useForm";
 import { LoginUser } from "@/services/UserServices.js";
+import { AuthContext } from "@/context/Auth.jsx";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const { loginUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  // Funcion que envia los datos
   const sendData = async (data) => {
     try {
       const result = await LoginUser(data);
-      if (result.status === 200) {
-        console.log(result);
-      }
-      console.log(result);
-    } catch (error) {
-      alert("Ocurrio un error: " + error.message);
-    }
 
-    LoginUser(data);
+      if (result.status === 200) {
+        loginUser(result.data.token);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      alert("Ocurrió un error: " + error.message);
+    }
   };
 
+  // Estado inicial con el hook useForm
   const { input, handleInputChange, handleSubmit } = useForm(sendData, {
     email: "",
     password: "",
   });
+
   return (
     <form className="container">
       <div className="mt-5 mb-3">
@@ -40,7 +47,7 @@ function Login() {
         <label htmlFor="inputPassword" className="col-sm-2 col-form-label">
           Password
         </label>
-        <div className="col-sm-10">
+        <div>
           <input
             type="password"
             className="form-control"
@@ -58,7 +65,7 @@ function Login() {
             className="btn btn-primary w-100"
             onClick={handleSubmit}
           >
-            Primary
+            Login
           </button>
         </div>
       </div>
